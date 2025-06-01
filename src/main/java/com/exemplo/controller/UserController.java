@@ -25,9 +25,10 @@ public class UserController {
             return Response.status(Response.Status.CREATED).entity(user).build();
         } catch (Exception e) {
             e.printStackTrace(); // Vai aparecer nos logs do Railway
-            return Response.serverError()
-                    .entity("Erro interno ao registrar usuário: " + e.getMessage())
+            return Response.status(Response.Status.UNAUTHORIZED)
+                    .entity("E-mail ou senha inválidos")
                     .build();
+
         }
     }
 
