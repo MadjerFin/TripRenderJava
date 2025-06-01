@@ -25,10 +25,9 @@ public class UserController {
             return Response.status(Response.Status.CREATED).entity(user).build();
         } catch (Exception e) {
             e.printStackTrace(); // Vai aparecer nos logs do Railway
-            return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("E-mail ou senha inválidos")
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Erro interno ao registrar usuário: " + e.getMessage())
                     .build();
-
         }
     }
 
@@ -39,7 +38,9 @@ public class UserController {
         if (logged != null) {
             return Response.ok(logged).build();
         }
-        return Response.status(Response.Status.UNAUTHORIZED).build();
+        return Response.status(Response.Status.UNAUTHORIZED)
+                .entity("E-mail ou senha inválidos") // <-- ESSENCIAL para o front exibir
+                .build();
     }
 
     @GET
