@@ -24,7 +24,7 @@ public class UserController {
             userService.save(user);
             return Response.status(Response.Status.CREATED).entity(user).build();
         } catch (Exception e) {
-            e.printStackTrace(); // Vai aparecer nos logs do Railway
+            e.printStackTrace(); // Vai aparecer nos logs do Render
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("Erro interno ao registrar usuário: " + e.getMessage())
                     .build();
@@ -39,7 +39,7 @@ public class UserController {
             return Response.ok(logged).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED)
-                .entity("E-mail ou senha inválidos") // <-- ESSENCIAL para o front exibir
+                .entity("E-mail ou senha inválidos")
                 .build();
     }
 
@@ -58,5 +58,12 @@ public class UserController {
     @Path("/{id}")
     public void delete(@PathParam("id") Long id) {
         userService.delete(id);
+    }
+
+    // ✅ Endpoint de saúde para monitoramento (Render, UptimeRobot etc.)
+    @GET
+    @Path("/health")
+    public Response healthCheck() {
+        return Response.ok("API Java está rodando!").build();
     }
 }
